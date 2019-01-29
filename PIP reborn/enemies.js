@@ -35,6 +35,56 @@ class Enemy extends Entity {
         //    this.selfDestruct()
     }
 }
+
+class MovingEnemy extends Enemy {
+  constructor(c, r, hitBoxRadiusCB, health, orientation/*init*/) {
+    super(c, r, hitBoxRadiusCB, health);
+    this.hurtPlayer = true;
+    this.damage = 1;
+    this.owner.allEnemies.push(this);
+  }
+
+  /** TODO:
+   * translate to proper js lol
+   * add entity collision interactions
+   * add map collision interactions
+   * add simple pathing algorithm
+   */
+
+/* Pseudo-code
+
+this.orientation = {
+
+  var xDiff = (Entity.Player.xCB - Entity.MovingEnemy.xCB);
+  var yDiff = (Entity.Player.yCB - Entity.MovingEnemy.yCB);
+
+  var angle = Math.atan(yDiff / xDiff);
+
+};
+
+// horizontal movement
+if (Entity.Player.xCB > MovingEnemy.xCB) {
+  MovingEnemy.xCB++; // define speeds
+  MovingEnemy.shoot(orientation);
+} else {
+  MovingEnemy.xCB--; // define speeds
+  MovingEnemy.shoot(orientation);
+}
+
+// horizontal movement
+if (Entity.Player.yCB > MovingEnemy.yCB) {
+  MovingEnemy.yCB++;
+  MovingEnemy.shoot(orientation);
+} else {
+  MovingEnemy.yCB--;
+  MovingEnemy.shoot(orientation);
+}
+
+*/
+
+
+}
+
 class Turret extends Enemy {
     constructor(c, r) {
         let hitBoxRadiusCB = 5.5;//in CB
