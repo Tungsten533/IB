@@ -59,7 +59,7 @@ this.orientation = {
   var xDiff = (Entity.Player.xCB - Entity.MovingEnemy.xCB);
   var yDiff = (Entity.Player.yCB - Entity.MovingEnemy.yCB);
 
-  var angle = Math.atan(yDiff / xDiff);
+  var angle = Math.atan2(yDiff, xDiff);
 
 };
 

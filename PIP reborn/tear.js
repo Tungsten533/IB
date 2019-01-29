@@ -1,8 +1,8 @@
 //let allTears = [];
 class Tear extends Entity {
-    /** 
+    /**
      * Tear is the basic projectile for the game
-     * 
+     *
      * @method Tear
      * @param  {Number} xCB
      * @param  {Number} yCB
@@ -40,7 +40,7 @@ class Tear extends Entity {
         this.xSpeedCB = this.inertialXSpeed * .2 + this.xShotSpeed;
         this.ySpeedCB = this.inertialYSpeed * .2 + this.yShotSpeed;
 
-        this.facingMovement = atan2(this.ySpeedCB, this.ySpeedCB);// in radians
+        this.facingMovement = Math.atan2(this.ySpeedCB, this.ySpeedCB);// in radians
         this.speed = Math.sqrt(Math.pow(this.xSpeedCB, 2) + Math.pow(this.ySpeedCB, 2));
         if (this.speed < this.shotspeed) {
             this.speed = this.shotSpeed;
