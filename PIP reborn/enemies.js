@@ -49,6 +49,7 @@ class MovingEnemy extends Enemy {
    * add entity collision interactions
    * add map collision interactions
    * add simple pathing algorithm
+   * define movement speeds, since they're based on direction and not angle
    */
 
 /* Pseudo-code
@@ -64,10 +65,10 @@ this.orientation = {
 
 // horizontal movement
 if (Entity.Player.xCB > MovingEnemy.xCB) {
-  MovingEnemy.xCB++; // define speeds
+  MovingEnemy.xCB++;
   MovingEnemy.shoot(orientation);
 } else {
-  MovingEnemy.xCB--; // define speeds
+  MovingEnemy.xCB--;
   MovingEnemy.shoot(orientation);
 }
 
