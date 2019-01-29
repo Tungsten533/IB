@@ -26,12 +26,12 @@ Object.freeze(roomType);
 
 //entities information
 class Entity {
-    constructor(collumn, row, hitBoxRadiusCB, health, owner) {
+    constructor(column, row, hitBoxRadiusCB, health, owner) {
         this.owner = currentRoom;
         if (owner instanceof Room) {
             this.owner = owner;
         }
-        this.xCB = (collumn + 2 - .5) * 10;// in centiblocks
+        this.xCB = (column + 2 - .5) * 10;// in centiblocks
         this.yCB = (row + 2 - .5) * 10;// in centiblocks
         this.hitBoxRadiusCB = hitBoxRadiusCB;//in centiblocks
         this.health = health;//in half hearts integers for players and in large numbers for enemies
@@ -162,7 +162,7 @@ class Entity {
                     {
                         this.yCB += moveDist * Math.sin(angleBetween);
                     }
-                    else 
+                    else
                     {
                         this.yCB -= moveDist * Math.sin(angleBetween);
                     }
@@ -225,7 +225,7 @@ class Entity {
                 let distanceBetweenDesired = entity.hitBoxRadiusCB + this.hitBoxRadiusCB;
                 entity.yCB = this.yCB + distanceBetweenDesired * Math.sin(angleBetween);
                 entity.xCB = this.xCB + distanceBetweenDesired * Math.cos(angleBetween);
-                
+
             }else if(entity instanceof Block && this.isMovable) {
                 if((this.xCB <= entity.hitBoxRightCB) && (this.xCB >= entity.hitBoxLeftCB)) {
                     //if the entity is hitting top or bottom
@@ -362,5 +362,3 @@ function recalibrate() {
     yGlobal = yBorder;
     resize = true;
 }
-
-

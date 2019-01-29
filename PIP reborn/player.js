@@ -26,13 +26,14 @@ var Character = {
 
 }
 let playerCharacter = Character.default;
+
 class Player extends Entity {
-    constructor(collumn, row, character) {
-        if (collumn === null)
-            collumn = 7 + 2;
+    constructor(column, row, character) {
+        if (column === null)
+            column = 7 + 2;
         if (row === null)
             row = 4 + 2;
-        super(collumn, row, 7, null);
+        super(column, row, 7, null);
         this.character = character;
         if (this.character === undefined) {
             this.character = Character.default;
@@ -80,7 +81,7 @@ class Player extends Entity {
         {
             yS += -1;
         }
-        if (keyIsDown(65))//a for left 
+        if (keyIsDown(65))//a for left
         {
             xS += -1;
         }
@@ -99,7 +100,7 @@ class Player extends Entity {
                 this.yCB -= this.referenceYSpeed / fps;
             this.invincible = false;
         } /*else if (!(yS == 0 && xS == 0)) {
-            
+
             for(let entity of this.collidingEntities) {
                 if(!(entity instanceof Tear)) {
                     let angleBetween = Math.atan2(this.yCB - entity.yCB, this.xCB - entity.xCB) % (2 * Math.PI);
@@ -117,7 +118,7 @@ class Player extends Entity {
                         this.yCB -= this.referenceYSpeed / fps;
                     }
                 }
-            } 
+            }
         }*/
         else {
             this.referenceXSpeed = 0
@@ -138,7 +139,7 @@ class Player extends Entity {
         {
             yS += -1;
         }
-        else if (keyIsDown(37))//left arrow for left 
+        else if (keyIsDown(37))//left arrow for left
         {
             xS += -1;
         }
@@ -214,6 +215,7 @@ class Player extends Entity {
 
     }
 }
+
 class Heart {
     constructor(array, health) {
         if (health === null) {
@@ -224,7 +226,9 @@ class Heart {
         array.push(this);
     }
 }
-function newPlayer(c, r) {/*
+
+/*
+function newPlayer(c, r) {
     if (c < 0)
         c = 0;
     else if (c > 13)
@@ -232,8 +236,8 @@ function newPlayer(c, r) {/*
     if (r < 0)
         r = 0;
     else if (r > 7)
-        r = 7;*/
+        r = 7;
     var p = new Player(c + 2, r + 2);
     allPlayers.push(p);
     allEntities.push(p);
-}
+}*/

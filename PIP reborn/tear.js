@@ -1,8 +1,8 @@
 //let allTears = [];
 class Tear extends Entity {
-    /** 
+    /**
      * Tear is the basic projectile for the game
-     * 
+     *
      * @method Tear
      * @param  {Number} xCB
      * @param  {Number} yCB
@@ -111,11 +111,13 @@ class Tear extends Entity {
     }
 
 }
+
+/*
 function newTear(xCB, yCB, size, shotAngle, shotSpeed, referenceXSpeed, referenceYSpeed, targets, range) {
     let t = new Tear(xCB, yCB, size, shotAngle, shotSpeed, referenceXSpeed, referenceYSpeed, targets, range);
     allTears.push(t);
     allEntities.push(t);
-}
+}*/
 
 var tearMode = {
     Four_Shot_Plus_Sign: function (xCB, yCB, size, angle, shotSpeed, referenceXSpeed, referenceYSpeed, shooter, range, damage, health) {
