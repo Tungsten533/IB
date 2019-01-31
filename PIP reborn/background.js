@@ -66,13 +66,16 @@ class Block {
             allBlocks.push(this);
         }*/
     }
-    hitBoxUpdate() {
+    hitBoxUpdate() { // call this whenever a block is moved
         this.hitBoxLeftCB = this.xCB - 5;
         this.hitBoxRightCB = this.xCB + 5;
         this.hitBoxTopCB = this.yCB - 5;
         this.hitBoxBottomCB = this.yCB + 5;
     }
-    changeBlockType(type) {
+    changeBlockType(type) { // call this to change block state
+      if(type === null || type === undefined) {
+        throw new Error("block type is undefined for " + this)
+      }
         this.type = type;
         this.isWalkable = this.type.isWalkable;
         this.isSolid = this.type.isSolid;
