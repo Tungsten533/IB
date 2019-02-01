@@ -59,8 +59,12 @@ this.orientation = {
   var xDiff = (Entity.Player.xCB - Entity.MovingEnemy.xCB);
   var yDiff = (Entity.Player.yCB - Entity.MovingEnemy.yCB);
 
-  var angle = Math.atan2(yDiff, xDiff);
+  var angle = 0; //init
+  if (yDiff/xDiff > 0) {
+    var angle = Math.atan2(yDiff, xDiff);
+  } else if (yDiff/xDiff < 0) {
 
+  }
 };
 
 // horizontal movement
