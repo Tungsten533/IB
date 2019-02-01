@@ -3,8 +3,9 @@
 class Enemy extends Entity {
     constructor(c, r, hitBoxRadiusCB, health) {
         super(c, r, hitBoxRadiusCB, health);
-        this.hurtPlayer = true;//default
-        this.damage = 1;
+        this.hurtPlayer = true;//default hurts Players
+        this.contactDamage = 1;
+        this.tearDamage = 1;
         this.owner.allEnemies.push(this);
     }
     /*
@@ -40,7 +41,7 @@ class MovingEnemy extends Enemy {
   constructor(c, r, hitBoxRadiusCB, health, orientation/*init*/) {
     super(c, r, hitBoxRadiusCB, health);
     this.hurtPlayer = true;
-    this.damage = 1;
+    this.contactDamage = 1;
     this.owner.allEnemies.push(this);
   }
 
@@ -210,6 +211,7 @@ class ShootingTurret extends Entity {
     }
 
 }
+
 class PlusCrossTurret extends ShootingTurret {
     constructor(c, r) {
         super(c, r);
@@ -227,6 +229,7 @@ class PlusCrossTurret extends ShootingTurret {
         ellipse(this.x, this.y, this.hitBoxRadius * 2, this.hitBoxRadius * 2);
     }
 }
+
 class DiagonalCrossTurret extends ShootingTurret {
     constructor(c, r) {
         super(c, r);
@@ -244,6 +247,7 @@ class DiagonalCrossTurret extends ShootingTurret {
         ellipse(this.x, this.y, this.hitBoxRadius * 2, this.hitBoxRadius * 2);
     }
 }
+
 class CrissCrossTurret extends ShootingTurret {
     constructor(c, r) {
         super(c, r);
@@ -263,6 +267,7 @@ class CrissCrossTurret extends ShootingTurret {
         ellipse(this.x, this.y, this.hitBoxRadius * 2, this.hitBoxRadius * 2);
     }
 }
+
 class PunchingBag extends Enemy {
     constructor(c, r, health) {
         if (health === undefined)
@@ -294,6 +299,7 @@ class Fly extends Enemy {
 
     }
 }
+
 
 class Button extends Entity {
     constructor(c, r) {
@@ -330,6 +336,7 @@ class Button extends Entity {
 
     }
 }
+
 class RoomResetButton extends Button {
     constructor(c, r) {
         super(c, r);

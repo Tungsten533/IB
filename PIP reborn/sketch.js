@@ -30,6 +30,7 @@ let fpsEngine = {
         text(`${Math.floor(this.displayFPS)} fps`, width - 16, 16) // Position of the fps label
     }
 }
+
 let setupRan = false;
 function setup() {
     // setup() runs once. Put your setup code here.
@@ -39,6 +40,7 @@ function setup() {
     new Floor();
     setupRan = true;
 }
+
 function draw() {
     if (millis() < 1000 || !setupRan) {
         return
@@ -116,6 +118,7 @@ function draw() {
 function windowResized() {
     recalibrate();
 }
+/*
 MVPRooms = [
     roomLayouts.MVPPuzzleRoom1,
     roomLayouts.MVPPuzzleRoom2,
@@ -146,4 +149,4 @@ function MVP() {
     else {
         background(100);
     }
-}
+}*/

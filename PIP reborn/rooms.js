@@ -13,7 +13,7 @@ var roomLayouts = {
         new PunchingBag(7, 4, 50)
     },
     testRoom: function () {
-        for (let c = 1; c <= collumnsInner; c += 2) {
+        for (let c = 1; c <= columnsInner; c += 2) {
             for (let r = 1; r <= rowsInner; r += 2) {
                 new Obstacle(c, r);
             }
@@ -21,21 +21,21 @@ var roomLayouts = {
 
     },
     testTurrets: function () {
-        for (let c = 2; c <= collumnsInner; c += 3) {
+        for (let c = 2; c <= columnsInner; c += 3) {
             for (let r = 2; r <= rowsInner; r += 3) {
                 new Turret(c, r);
             }
         }
     },
     testBrainless_Turrets: function () {
-        for (let c = 3; c <= collumnsInner; c += 8) {
+        for (let c = 3; c <= columnsInner; c += 8) {
             for (let r = 2; r <= rowsInner; r += 4) {
                 new CrissCrossTurret(c, r);
             }
         }
     },
     MVPPuzzleRoom1: function () {
-        for (let c = 3; c <= collumnsInner; c += 8) {
+        for (let c = 3; c <= columnsInner; c += 8) {
             for (let r = 2; r <= rowsInner; r += 4) {
                 new CrissCrossTurret(c, r);
             }
@@ -46,12 +46,12 @@ var roomLayouts = {
     },
     MVPPuzzleRoom2: function () {
 
-        for (let c = 3; c <= collumnsInner; c += 8) {
+        for (let c = 3; c <= columnsInner; c += 8) {
             for (let r = 2; r <= rowsInner; r += 4) {
                 new CrissCrossTurret(c, r);
             }
         }
-        for (let c = 1; c <= collumnsInner; c += 12) {
+        for (let c = 1; c <= columnsInner; c += 12) {
             for (let r = 1; r <= rowsInner; r += 6) {
                 new Button(c, r);
             }
@@ -60,17 +60,17 @@ var roomLayouts = {
     },
     MVPPuzzleRoom3: function () {
 
-        for (let c = 3; c <= collumnsInner; c += 8) {
+        for (let c = 3; c <= columnsInner; c += 8) {
             for (let r = 1; r <= rowsInner; r += 6) {
                 new DiagonalCrossTurret(c, r);
             }
         }
-        for (let c = 1; c <= collumnsInner; c += 12) {
+        for (let c = 1; c <= columnsInner; c += 12) {
             for (let r = 3; r <= rowsInner - 1; r += 2) {
                 new DiagonalCrossTurret(c, r);
             }
         }
-        for (let c = 1; c <= collumnsInner; c += 12) {
+        for (let c = 1; c <= columnsInner; c += 12) {
             for (let r = 1; r <= rowsInner; r += 6) {
                 new Button(c, r);
             }
@@ -81,17 +81,17 @@ var roomLayouts = {
     MVPPuzzleRoom4: function () {
         for (let r = 1; r <= rowsInner; r += 2) {
             new Obstacle(2, r);
-            new Obstacle(collumnsInner - 1, r);
+            new Obstacle(columnsInner - 1, r);
         }
         for (let r = 2; r <= rowsInner; r += 4) {
             new ShootingTurret(2, r, Math.PI);
-            new ShootingTurret(collumnsInner - 1, r, 0);
+            new ShootingTurret(columnsInner - 1, r, 0);
         }
         for (let c = 5; c < 10; c += 4) {
             new CrissCrossTurret(c, 2);
             new CrissCrossTurret(c, 6);
         }
-        for (let c = 1; c <= collumnsInner; c += 12) {
+        for (let c = 1; c <= columnsInner; c += 12) {
             for (let r = 1; r <= rowsInner; r += 6) {
                 new Button(c, r);
             }
@@ -99,17 +99,17 @@ var roomLayouts = {
     },
     MVPPuzzleRoom5: function () {
         new ShootingTurret(3, 1, 0);
-        new ShootingTurret(collumnsInner - 2, 1, Math.PI * 3 / 2);
+        new ShootingTurret(columnsInner - 2, 1, Math.PI * 3 / 2);
         new ShootingTurret(3, rowsInner, Math.PI / 2);
-        new ShootingTurret(collumnsInner - 2, rowsInner, Math.PI);
+        new ShootingTurret(columnsInner - 2, rowsInner, Math.PI);
         new Obstacle(4, 2);
         new Obstacle(4, rowsInner - 1);
-        new Obstacle(collumnsInner - 3, 2);
-        new Obstacle(collumnsInner - 3, rowsInner - 1);
+        new Obstacle(columnsInner - 3, 2);
+        new Obstacle(columnsInner - 3, rowsInner - 1);
         new ShootingTurret(5, 2, Math.PI * 3 / 2);
         new ShootingTurret(4, rowsInner - 2, 0);
-        new ShootingTurret(collumnsInner - 3, 3, Math.PI);
-        new ShootingTurret(collumnsInner - 4, rowsInner - 1, Math.PI / 2);
+        new ShootingTurret(columnsInner - 3, 3, Math.PI);
+        new ShootingTurret(columnsInner - 4, rowsInner - 1, Math.PI / 2);
         for (let i = 0; i < 3; i++) {
             new Obstacle(6 + i, 2);
             new Obstacle(6 + i, rowsInner - 1);
@@ -117,7 +117,7 @@ var roomLayouts = {
         for (let c = 1; c <= 4; c++) {
             new Obstacle(2 * c + 2, 4);
         }
-        for (let c = 1; c <= collumnsInner; c += 6 * 2) {
+        for (let c = 1; c <= columnsInner; c += 6 * 2) {
             new Button(c, 4);
         }
     },
@@ -125,8 +125,8 @@ var roomLayouts = {
 
 var roomSize = {
     normal: {
-        collumnsTotal: 17,
-        collumnsInner: 13,
+        columnsTotal: 17,
+        columnsInner: 13,
         rowsTotal: 11,
         rowsInner: 7,
         doorLocations: [
@@ -137,13 +137,15 @@ var roomSize = {
         ],
     },
     XL_2_By_2: {
-        collumnsTotal: 30,
-        collumnsInner: 26,
+        columnsTotal: 30,
+        columnsInner: 26,
         rowsTotal: 18,
         rowsInner: 14,
     },
 }
-//rooms will have to be objects once different rooms start being a thing as of now having just one room for mpv will have to do
+//rooms will have to be objects once different rooms
+//    start being a thing as of now having just one
+//    room for mpv will have to do
 class Room {
     constructor(roomSize, layout, owner, horizontalRoomSpot, verticalRoomSpot) {
         this.horizontalRoomSpot = horizontalRoomSpot;

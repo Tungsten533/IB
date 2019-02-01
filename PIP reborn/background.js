@@ -1,6 +1,6 @@
-var collumnsTotal = 17;
+var columnsTotal = 17;
 var rowsTotal = 11;
-var collumnsInner = 13;
+var columnsInner = 13;
 var rowsInner = 7;
 var showGrid = true;
 
@@ -28,7 +28,6 @@ var blockType = {//isSolid is currently unused
 }
 Object.freeze(blockType);
 
-
 var obstacleType = {
     rock: {
         isWalkable: false,
@@ -41,13 +40,13 @@ var obstacleType = {
 Object.freeze(obstacleType);
 
 class Block {
-    constructor(collumn, row, type) {
+    constructor(column, row, type) {
         this.row = row;
-        this.collumn = collumn;
+        this.column = column;
         this.changeBlockType(type);
         this.oldType = this.type;
         //if(type instanceof blockType)
-        this.xCB = (this.collumn - .5) * 10;
+        this.xCB = (this.column - .5) * 10;
         this.yCB = (this.row - .5) * 10;
 
         this.hitBoxUpdate();
@@ -57,7 +56,7 @@ class Block {
         this.owner.allObstacles.push(this);
         this.resize();
         /*
-        if (this.row <= 2 || this.row >= 10 || this.collumn <= 2 || this.collumn >= 16)
+        if (this.row <= 2 || this.row >= 10 || this.column <= 2 || this.column >= 16)
         {
             this.changeBlockType(blockType.wall);
             allBlocks.push(this);
@@ -67,13 +66,16 @@ class Block {
             allBlocks.push(this);
         }*/
     }
-    hitBoxUpdate() {
+    hitBoxUpdate() { // call this whenever a block is moved
         this.hitBoxLeftCB = this.xCB - 5;
         this.hitBoxRightCB = this.xCB + 5;
         this.hitBoxTopCB = this.yCB - 5;
         this.hitBoxBottomCB = this.yCB + 5;
     }
-    changeBlockType(type) {
+    changeBlockType(type) { // call this to change block state
+      if(type === null || type === undefined) {
+        throw new Error("block type is undefined for " + this)
+      }
         this.type = type;
         this.isWalkable = this.type.isWalkable;
         this.isSolid = this.type.isSolid;
@@ -90,12 +92,12 @@ class Block {
             else if(this.roomChangeVert < -1) {
                 this.roomChangeVert = -2;
             }*/
-            this.roomChangeHori = (this.collumn - 9) / 13;
+            this.roomChangeHori = (this.column - 9) / 13;
             if (this.roomChangeHori < 0) {
                 this.roomChangeHori = -1;
             }
             if (!Number.isInteger(this.roomChangeHori)) {
-                this.roomChangeHori = (this.collumn - 3) / 13;
+                this.roomChangeHori = (this.column - 3) / 13;
             }
             /*
             else if(this.roomChangeHori > 1) {
@@ -104,7 +106,7 @@ class Block {
         }
     }
     resize() {
-        this.xRelative = (this.collumn - 1) * blockSize;
+        this.xRelative = (this.column - 1) * blockSize;
         this.yRelative = (this.row - 1) * blockSize;
         this.x = xGlobal + this.xRelative;
         this.y = yGlobal + this.yRelative;
@@ -205,13 +207,15 @@ class Obstacle extends Block {
         rect(this.x, this.y, blockSize, blockSize);
     }
 }
-function newObstacle(collumn, row, type) {
-    let c = collumn + 2;
+/*
+function newObstacle(column, row, type) {
+    let c = column + 2;
     let r = row + 2;
     let Obs = new Obstacle(c, r, type);
     Obs.resize();
 
-}
+}*/
+
 function makeBlocks() {
     for (let r = 1; r <= 11; r++) {
         for (let c = 1; c <= 17; c++) {
@@ -219,22 +223,23 @@ function makeBlocks() {
         }
     }
 }
+
 function makeWalls(roomSize) {
     for (let row = 1; row <= roomSize.rowsTotal; row++) {
         new Block(1, row, blockType.wall);
         new Block(2, row, blockType.wall);
-        new Block(roomSize.collumnsTotal, row, blockType.wall);
-        new Block(roomSize.collumnsTotal - 1, row, blockType.wall);
+        new Block(roomSize.columnsTotal, row, blockType.wall);
+        new Block(roomSize.columnsTotal - 1, row, blockType.wall);
     }
-    for (let collumn = 1 + 2; collumn <= roomSize.collumnsTotal - 2; collumn++) {
-        new Block(collumn, 1, blockType.wall);
-        new Block(collumn, 2, blockType.wall);
-        new Block(collumn, roomSize.rowsTotal, blockType.wall);
-        new Block(collumn, roomSize.rowsTotal - 1, blockType.wall);
+    for (let column = 1 + 2; column <= roomSize.columnsTotal - 2; column++) {
+        new Block(column, 1, blockType.wall);
+        new Block(column, 2, blockType.wall);
+        new Block(column, roomSize.rowsTotal, blockType.wall);
+        new Block(column, roomSize.rowsTotal - 1, blockType.wall);
     }
     for (block of currentRoom.allObstacles) {
         for (doorSpot of roomSize.doorLocations) {
-            if (block.collumn === doorSpot[0] && block.row === doorSpot[1]) {
+            if (block.column === doorSpot[0] && block.row === doorSpot[1]) {
                 block.type = blockType.door;
             }
         }
