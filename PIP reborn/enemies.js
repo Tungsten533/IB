@@ -3,9 +3,8 @@
 class Enemy extends Entity {
     constructor(c, r, hitBoxRadiusCB, health) {
         super(c, r, hitBoxRadiusCB, health);
-        this.hurtPlayer = true;//default hurts Players
-        this.contactDamage = 1;
-        this.tearDamage = 1;
+        this.hurtPlayer = true;//default
+        this.damage = 1;
         this.owner.allEnemies.push(this);
     }
     /*
@@ -41,7 +40,7 @@ class MovingEnemy extends Enemy {
   constructor(c, r, hitBoxRadiusCB, health, orientation/*init*/) {
     super(c, r, hitBoxRadiusCB, health);
     this.hurtPlayer = true;
-    this.contactDamage = 1;
+    this.damage = 1;
     this.owner.allEnemies.push(this);
   }
 
@@ -51,11 +50,12 @@ class MovingEnemy extends Enemy {
    * add map collision interactions
    * add simple pathing algorithm
    * define movement speeds, since they're based on direction and not angle
+   * MovingEnemy.orientation
    */
 
 /* Pseudo-code
 
-this.orientation = {
+this.orientation = { // WIP
 
   var xDiff = (Entity.Player.xCB - Entity.MovingEnemy.xCB);
   var yDiff = (Entity.Player.yCB - Entity.MovingEnemy.yCB);
@@ -77,7 +77,7 @@ if (Entity.Player.xCB > MovingEnemy.xCB) {
   MovingEnemy.shoot(orientation);
 }
 
-// horizontal movement
+// vertical movement
 if (Entity.Player.yCB > MovingEnemy.yCB) {
   MovingEnemy.yCB++;
   MovingEnemy.shoot(orientation);
@@ -211,7 +211,6 @@ class ShootingTurret extends Entity {
     }
 
 }
-
 class PlusCrossTurret extends ShootingTurret {
     constructor(c, r) {
         super(c, r);
@@ -229,7 +228,6 @@ class PlusCrossTurret extends ShootingTurret {
         ellipse(this.x, this.y, this.hitBoxRadius * 2, this.hitBoxRadius * 2);
     }
 }
-
 class DiagonalCrossTurret extends ShootingTurret {
     constructor(c, r) {
         super(c, r);
@@ -247,7 +245,6 @@ class DiagonalCrossTurret extends ShootingTurret {
         ellipse(this.x, this.y, this.hitBoxRadius * 2, this.hitBoxRadius * 2);
     }
 }
-
 class CrissCrossTurret extends ShootingTurret {
     constructor(c, r) {
         super(c, r);
@@ -267,7 +264,6 @@ class CrissCrossTurret extends ShootingTurret {
         ellipse(this.x, this.y, this.hitBoxRadius * 2, this.hitBoxRadius * 2);
     }
 }
-
 class PunchingBag extends Enemy {
     constructor(c, r, health) {
         if (health === undefined)
@@ -299,7 +295,6 @@ class Fly extends Enemy {
 
     }
 }
-
 
 class Button extends Entity {
     constructor(c, r) {
@@ -336,7 +331,6 @@ class Button extends Entity {
 
     }
 }
-
 class RoomResetButton extends Button {
     constructor(c, r) {
         super(c, r);
