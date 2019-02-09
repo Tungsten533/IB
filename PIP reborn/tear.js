@@ -18,38 +18,80 @@ class Tear extends Entity {
      * @chainable
      */
     constructor(xCB, yCB, size, shotAngle, shotSpeed, referenceXSpeed, referenceYSpeed, shooter, range, damage, health) {
+      if(size === null || size === undefined) {
+        throw new Error("tear size is undefined in creation");
+      }
+
+      if(health === null || health === undefined) {
+        throw new Error("health is undefined for tear in creation");
+      }
+
+      if(shooter === null || shooter === undefined) {
+        throw new Error("shooter is undefined for tear in creation");
+      }
         super(null, null, size, health, shooter.owner);
-        this.xCB = xCB;//in CB
-        this.yCB = yCB;// in CB
-        this.shotAngle = shotAngle;// in radians
-        this.movementSpeed = shotSpeed;//in CB
-        this.range = range;
-        this.birthTime = millis();
-        this.damage = damage;
-        this.shooter = shooter;
-        this.owner = this.shooter.owner;
-        this.owner.allTears.push(this);
-        this.collidingEntities = [];
 
-        this.inertialXSpeed = referenceXSpeed;
-        this.inertialYSpeed = -referenceYSpeed;
+      if(xCB === null || xCB === undefined) {
+        throw new Error("x value is undefined for tear in creation");
+      }
+      if(yCB === null || yCB === undefined) {
+        throw new Error("y value is undefined for tear in creation");
+      }
+      this.xCB = xCB;//in CB
+      this.yCB = yCB;// in CB
+      if(shotAngle === null || shotAngle === undefined) {
+        throw new Error("angle shot is undefined tear in creation");
+      }
+      this.shotAngle = shotAngle;// in radians
 
-        this.xShotSpeed = this.movementSpeed * Math.cos(this.shotAngle);
-        this.yShotSpeed = -this.movementSpeed * Math.sin(this.shotAngle);
+      if(shotSpeed === null || shotSpeed === undefined) {
+        throw new Error("shot speed is undefined for tear in creation");
+      }
+      this.movementSpeed = shotSpeed;//in CB
 
-        this.xSpeedCB = this.inertialXSpeed * .2 + this.xShotSpeed;
-        this.ySpeedCB = this.inertialYSpeed * .2 + this.yShotSpeed;
+      if(range === null || range === undefined) {
+        throw new Error("range is undefined for tear in creation");
+      }
+      this.range = range;
+      this.birthTime = millis();
 
-        this.facingMovement = atan2(this.ySpeedCB, this.ySpeedCB);// in radians
-        this.speed = Math.sqrt(Math.pow(this.xSpeedCB, 2) + Math.pow(this.ySpeedCB, 2));
-        if (this.speed < this.shotspeed) {
-            this.speed = this.shotSpeed;
-            this.xSpeedCB = this.speed * Math.cos(this.facingMovement);
-            this.ySpeedCB = this.speed * Math.sin(this.facingMovement);
-        }
-        if (this.shooter instanceof Enemy) {
-            this.damage = 1;
-        }
+      if(damage === null || damage === undefined) {
+        throw new Error("damage is undefined for tear in creation");
+      }
+      this.damage = damage;
+      if (this.shooter instanceof Enemy) {
+          this.damage = 1;
+      }
+      if(!(shooter instanceof Object)) {
+        throw new Error("shooter for tear is not an object in creation");
+      }
+      this.shooter = shooter;
+      this.owner = this.shooter.owner;
+      this.owner.allTears.push(this);
+      this.collidingEntities = [];
+
+      if(referenceXSpeed === null || referenceXSpeed === undefined) {
+        throw new Error("referenceXSpeed is undefined for tear in creation");
+      }
+      this.inertialXSpeed = referenceXSpeed;
+      if(referenceYSpeed === null || referenceYSpeed === undefined) {
+        throw new Error("referenceYSpeed is undefined for tear in creation");
+      }
+      this.inertialYSpeed = -referenceYSpeed;
+
+      this.xShotSpeed = this.movementSpeed * Math.cos(this.shotAngle);
+      this.yShotSpeed = -this.movementSpeed * Math.sin(this.shotAngle);
+
+      this.xSpeedCB = this.inertialXSpeed * .2 + this.xShotSpeed;
+      this.ySpeedCB = this.inertialYSpeed * .2 + this.yShotSpeed;
+
+      this.facingMovement = atan2(this.ySpeedCB, this.ySpeedCB);// in radians
+      this.speed = Math.sqrt(Math.pow(this.xSpeedCB, 2) + Math.pow(this.ySpeedCB, 2));
+      if (this.speed < this.shotspeed) {
+          this.speed = this.shotSpeed;
+          this.xSpeedCB = this.speed * Math.cos(this.facingMovement);
+          this.ySpeedCB = this.speed * Math.sin(this.facingMovement);
+      }
     }
     selfDestructDetection() {
         for (let c of this.collidingEntities) {
