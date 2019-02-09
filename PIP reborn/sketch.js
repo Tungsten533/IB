@@ -109,7 +109,9 @@ function draw() {
         roomCleared = true;
     }*/
     currentFloor = allFloors[0];
-    currentFloor.update()
+    if(fps > 0) {
+      currentFloor.update()
+    }
     resize = false;
     fpsEngine.updateFPS();
     fpsEngine.showFPS(50, 50, 50);
