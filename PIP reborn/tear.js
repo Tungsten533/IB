@@ -55,6 +55,7 @@ class Tear extends Entity {
       this.range = range;
       this.birthTime = millis();
 
+<<<<<<< HEAD
       if(damage === null || damage === undefined) {
         throw new Error("damage is undefined for tear in creation");
       }
@@ -92,6 +93,18 @@ class Tear extends Entity {
           this.xSpeedCB = this.speed * Math.cos(this.facingMovement);
           this.ySpeedCB = this.speed * Math.sin(this.facingMovement);
       }
+=======
+        this.facingMovement = Math.atan2(this.ySpeedCB, this.ySpeedCB);// in radians
+        this.speed = Math.sqrt(Math.pow(this.xSpeedCB, 2) + Math.pow(this.ySpeedCB, 2));
+        if (this.speed < this.shotspeed) {
+            this.speed = this.shotSpeed;
+            this.xSpeedCB = this.speed * Math.cos(this.facingMovement);
+            this.ySpeedCB = this.speed * Math.sin(this.facingMovement);
+        }
+        if (this.shooter instanceof Enemy) {
+            this.damage = 1;
+        }
+>>>>>>> 940e3fb44f57bdc24b58fb16944ea6a5fc78273c
     }
     selfDestructDetection() {
         for (let c of this.collidingEntities) {
