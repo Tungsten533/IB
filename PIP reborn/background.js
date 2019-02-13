@@ -57,10 +57,10 @@ class Block {
       this.yCB = (this.row - .5) * 10;
 
       this.hitBoxUpdate();
-      this.owner = currentRoom;
+      this.ownerRoom = currentRoom;
       if (this instanceof Obstacle)
           return
-      this.owner.allObstacles.push(this);
+      this.ownerRoom.allObstacles.push(this);
       this.resize();
       /*
       if (this.row <= 2 || this.row >= 10 || this.column <= 2 || this.column >= 16)
@@ -125,17 +125,17 @@ class Block {
   }
   walkedInto() {
       //console.log(this.roomChangeHori, this.roomChangeVert)
-      this.owner.roomChangeHori = this.roomChangeHori;
+      this.ownerRoom.roomChangeHori = this.roomChangeHori;
       if (this.roomChangeHori > 0) {
-          this.owner.rightDoorTriggered = true;
+          this.ownerRoom.rightDoorTriggered = true;
       } else if (this.roomChangeHori < 0) {
-          this.owner.leftDoorTriggered = true;
+          this.ownerRoom.leftDoorTriggered = true;
       }
-      this.owner.roomChangeVert = this.roomChangeVert;
+      this.ownerRoom.roomChangeVert = this.roomChangeVert;
       if (this.roomChangeVert > 0) {
-          this.owner.topDoorTriggered = true;
+          this.ownerRoom.topDoorTriggered = true;
       } else if (this.roomChangeVert < 0) {
-          this.owner.bottomDoorTriggered = true;
+          this.ownerRoom.bottomDoorTriggered = true;
       }
 
   }
@@ -147,12 +147,12 @@ class Block {
       if (this.type === blockType.door) {
           fill(0);
           //text((this.roomChangeHori + ", " + this.roomChangeVert), this.x + blockSize, this.y)
-          if (this.owner.cleared === false && this.isOpen === false) {
+          if (this.ownerRoom.cleared === false && this.isOpen === false) {
               this.isWalkable = false;
           }
           else {
               this.isWalkable = true;
-              for (let player of this.owner.allPlayers) {
+              for (let player of this.ownerRoom.allPlayers) {
                   //console.log("i ran")
                   if (Math.pow((Math.pow((this.xCB - player.xCB), 2) + Math.pow((this.yCB - player.yCB), 2)), 1 / 2) <= 3) {
                       this.walkedInto();
@@ -163,7 +163,7 @@ class Block {
       }
       this.printing();
 
-      text((this.owner.horizontalRoomSpot + ", " + this.owner.verticalRoomSpot), this.x + blockSize, this.y)
+      text((this.ownerRoom.horizontalRoomSpot + ", " + this.ownerRoom.verticalRoomSpot), this.x + blockSize, this.y)
       this.oldType = this.type;
   }
   printing() {
@@ -214,7 +214,7 @@ class Obstacle extends Block {
       if (type === undefined || type === null)
           type = obstacleType.rock;//default is rock
       super(column + 2, row + 2, type);
-      this.owner.allObstacles.unshift(this);
+      this.ownerRoom.allObstacles.unshift(this);
       this.resize();
   }
   printing() {

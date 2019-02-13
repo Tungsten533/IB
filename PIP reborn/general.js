@@ -26,10 +26,10 @@ Object.freeze(roomType);
 
 //entities information
 class Entity {
-    constructor(column, row, hitBoxRadiusCB, health, owner) {
-        this.owner = currentRoom;
-        if (owner instanceof Room) {
-            this.owner = owner;
+    constructor(column, row, hitBoxRadiusCB, health, ownerRoom) {
+        this.ownerRoom = currentRoom;
+        if (ownerRoom instanceof Room) {
+            this.ownerRoom = ownerRoom;
         }
         this.xCB = (column + 2 - .5) * 10;// in centiblocks
         this.yCB = (row + 2 - .5) * 10;// in centiblocks
@@ -40,7 +40,7 @@ class Entity {
         this.collidingTop = false;
         this.collidingBottom = false;
         this.colliders = [];
-        this.oldObstacleNum = this.owner.allObstacles.length;
+        this.oldObstacleNum = this.ownerRoom.allObstacles.length;
         this.selfDestruct = false;
         this.originalColliders = [];
         this.blacklistedEntities = [];
@@ -57,7 +57,7 @@ class Entity {
             this.colliders.push(i);
         }*/
 
-        for (let i of this.owner.allObstacles) {
+        for (let i of this.ownerRoom.allObstacles) {
             if (i.type !== blockType.floor) {
                 this.originalColliders.push(i);
                 this.colliders.push(i);
@@ -298,7 +298,7 @@ class Entity {
             if (ignore)
                 continue
             if (this instanceof Tear) {
-                if (entity === this.owner)
+                if (entity === this.shooter)
                     continue
                 if (entity instanceof Enemy || entity instanceof Player)//!!!! will not work. don't want enemies or players hurting each other
                 {

@@ -147,12 +147,12 @@ var roomSize = {
 //    start being a thing as of now having just one
 //    room for mpv will have to do
 class Room {
-    constructor(roomSize, layout, owner, horizontalRoomSpot, verticalRoomSpot) {
+    constructor(roomSize, layout, ownerFloor, horizontalRoomSpot, verticalRoomSpot) {
         this.horizontalRoomSpot = horizontalRoomSpot;
         this.verticalRoomSpot = verticalRoomSpot;
         this.roomChangeVert = 0;
         this.roomChangeHori = 0;
-        //this.owner = floor;
+        //this.ownerFloor = floor;
         this.layout = layout;
         this.roomSize = roomSize.normal;
         this.cleared = false;
@@ -167,13 +167,13 @@ class Room {
             console.log(layout)
             throw new Error("room layout is not defined")
         }
-        //this.owner.rooms.push(this);
+        //this.ownerFloor.rooms.push(this);
         this.allObstacles = [];
         this.allEnemies = [];
         this.allPlayers = [];
         this.allTears = [];
-        this.owner = owner;
-        this.owner.rooms.push(this);
+        this.ownerFloor = ownerFloor;
+        this.ownerFloor.rooms.push(this);
         //currentRoom = this;
         //new Player(7, 4, playerCharacter);
         this.initialized = false;
@@ -183,13 +183,13 @@ class Room {
         }
     }
     initializeNewRoom() {
-        this.owner.currentRoom.isCurrentRoom();
-        this.owner.currentRoom.allPlayers = this.allPlayers.slice();
-        for (let player of this.owner.currentRoom.allPlayers) {
-            player.owner = this.owner.currentRoom;
+        this.ownerFloor.currentRoom.isCurrentRoom();
+        this.ownerFloor.currentRoom.allPlayers = this.allPlayers.slice();
+        for (let player of this.ownerFloor.currentRoom.allPlayers) {
+            player.ownerRoom = this.ownerRoom.currentRoom;
             player.originalColliders = [];
             player.colliders = [];
-            for (let i of player.owner.allObstacles) {
+            for (let i of player.ownerRoom.allObstacles) {
                 if (i.type !== blockType.floor) {
                     player.originalColliders.push(i);
                     player.colliders.push(i);
@@ -198,34 +198,34 @@ class Room {
         }
     }
     currentRoomHandOff() {
-        let myRoomGrid = this.owner.roomGrid;
+        let myRoomGrid = this.ownerFloor.roomGrid;
         if (this.topDoorTriggered) {
             console.log("going up");
-            if (this.verticalRoomSpot < this.owner.roomGridBiggestY) {
-                //console.log(this.horizontalRoomSpot - this.owner.roomGridSmallestX, this.owner.roomGridBiggestY - this.verticalRoomSpot - 1);
-                this.owner.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.owner.roomGridSmallestX)][this.owner.roomGridBiggestY - this.verticalRoomSpot - 1];
+            if (this.verticalRoomSpot < this.ownerFloor.roomGridBiggestY) {
+                //console.log(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX, this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot - 1);
+                this.ownerFloor.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX)][this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot - 1];
             }
-            else if (this.verticalRoomSpot === this.owner.roomGridBiggestY) {
-                this.owner.roomGridExpandUp();
-                this.owner.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.owner.roomGridSmallestX)][0];
+            else if (this.verticalRoomSpot === this.ownerFloor.roomGridBiggestY) {
+                this.ownerFloor.roomGridExpandUp();
+                this.ownerFloor.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX)][0];
             }
             this.initializeNewRoom();
-            for (let somePlayer of this.owner.currentRoom.allPlayers) {
+            for (let somePlayer of this.ownerFloor.currentRoom.allPlayers) {
                 somePlayer.xCB = 85;
                 somePlayer.yCB = 85;
             }
         }
         else if (this.bottomDoorTriggered) {
             console.log("going down");
-            if (this.verticalRoomSpot > this.owner.roomGridSmallestY) {
-                this.owner.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.owner.roomGridSmallestX)][this.owner.roomGridBiggestY - this.verticalRoomSpot + 1];
+            if (this.verticalRoomSpot > this.ownerFloor.roomGridSmallestY) {
+                this.ownerFloor.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX)][this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot + 1];
             }
-            else if (this.verticalRoomSpot === this.owner.roomGridSmallestY) {
-                this.owner.roomGridExpandDown();
-                this.owner.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.owner.roomGridSmallestX)][myRoomGrid[0].length - 1];
+            else if (this.verticalRoomSpot === this.ownerFloor.roomGridSmallestY) {
+                this.ownerFloor.roomGridExpandDown();
+                this.ownerFloor.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX)][myRoomGrid[0].length - 1];
             }
             this.initializeNewRoom();
-            for (let somePlayer of this.owner.currentRoom.allPlayers) {
+            for (let somePlayer of this.ownerFloor.currentRoom.allPlayers) {
                 somePlayer.xCB = 85;
                 somePlayer.yCB = 25;
             }
@@ -233,30 +233,30 @@ class Room {
         }
         else if (this.leftDoorTriggered) {
             console.log("going left");
-            if (this.horizontalRoomSpot > this.owner.roomGridSmallestX) {
-                this.owner.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.owner.roomGridSmallestX - 1)][this.owner.roomGridBiggestY - this.verticalRoomSpot];
+            if (this.horizontalRoomSpot > this.ownerFloor.roomGridSmallestX) {
+                this.ownerFloor.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX - 1)][this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot];
             }
-            else if (this.horizontalRoomSpot === this.owner.roomGridSmallestX) {
-                this.owner.roomGridExpandLeft();
-                this.owner.currentRoom = myRoomGrid[(0)][this.owner.roomGridBiggestY - this.verticalRoomSpot];
+            else if (this.horizontalRoomSpot === this.ownerFloor.roomGridSmallestX) {
+                this.ownerFloor.roomGridExpandLeft();
+                this.ownerFloor.currentRoom = myRoomGrid[(0)][this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot];
             }
             this.initializeNewRoom();
-            for (let somePlayer of this.owner.currentRoom.allPlayers) {
+            for (let somePlayer of this.ownerFloor.currentRoom.allPlayers) {
                 somePlayer.xCB = 145;
                 somePlayer.yCB = 55;
             }
         }
         else if (this.rightDoorTriggered) {
             console.log("going right");
-            if (this.horizontalRoomSpot < this.owner.roomGridBiggestX) {
-                this.owner.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.owner.roomGridSmallestX + 1)][this.owner.roomGridBiggestY - this.verticalRoomSpot];
+            if (this.horizontalRoomSpot < this.ownerFloor.roomGridBiggestX) {
+                this.ownerFloor.currentRoom = myRoomGrid[(this.horizontalRoomSpot - this.ownerFloor.roomGridSmallestX + 1)][this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot];
             }
-            else if (this.horizontalRoomSpot === this.owner.roomGridBiggestX) {
-                this.owner.roomGridExpandRight();
-                this.owner.currentRoom = myRoomGrid[(myRoomGrid.length - 1)][this.owner.roomGridBiggestY - this.verticalRoomSpot];
+            else if (this.horizontalRoomSpot === this.ownerFloor.roomGridBiggestX) {
+                this.ownerFloor.roomGridExpandRight();
+                this.ownerFloor.currentRoom = myRoomGrid[(myRoomGrid.length - 1)][this.ownerFloor.roomGridBiggestY - this.verticalRoomSpot];
             }
             this.initializeNewRoom();
-            for (let somePlayer of this.owner.currentRoom.allPlayers) {
+            for (let somePlayer of this.ownerFloor.currentRoom.allPlayers) {
                 somePlayer.xCB = 25;
                 somePlayer.yCB = 55;
             }

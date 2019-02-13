@@ -64,7 +64,7 @@ class Player extends Entity {
         this.shotCooldown = 0;
         this.oldTime = 0;
         this.eye = 0;
-        this.owner.allPlayers.push(this);
+        this.ownerRoom.allPlayers.push(this);
     }
     findMovementFacing() {
         if(fps == 0) {
@@ -197,7 +197,7 @@ class Player extends Entity {
         this.hitBoxRadius = this.hitBoxRadiusCB * centiBlock;
         //this.xCB = (mouseX - xBorder) / centiBlock;
         //this.yCB = (mouseY - yBorder) / centiBlock;
-        this.colliders = this.originalColliders.concat(this.owner.allEnemies, this.owner.allObstacles)
+        this.colliders = this.originalColliders.concat(this.ownerRoom.allEnemies, this.ownerRoom.allObstacles)
         this.findMovementFacing();
         this.findShootingFacing();
         super.collisionDetection();

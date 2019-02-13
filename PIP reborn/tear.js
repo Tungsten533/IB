@@ -55,20 +55,19 @@ class Tear extends Entity {
       this.range = range;
       this.birthTime = millis();
 
-<<<<<<< HEAD
       if(damage === null || damage === undefined) {
         throw new Error("damage is undefined for tear in creation");
       }
       this.damage = damage;
+      this.shooter = shooter;
       if (this.shooter instanceof Enemy) {
           this.damage = 1;
       }
       if(!(shooter instanceof Object)) {
         throw new Error("shooter for tear is not an object in creation");
       }
-      this.shooter = shooter;
-      this.owner = this.shooter.owner;
-      this.owner.allTears.push(this);
+      this.ownerRoom = this.shooter.owner;
+      this.ownerRoom.allTears.push(this);
       this.collidingEntities = [];
 
       if(referenceXSpeed === null || referenceXSpeed === undefined) {
@@ -122,19 +121,19 @@ class Tear extends Entity {
             }*/
         }
         if (this.selfDestruct) {
-            for (let t in this.owner.allTears) {
-                if (this.owner.allTears[t] === this)
-                    this.owner.allTears.slice(t, 1);
+            for (let t in this.ownerRoom.allTears) {
+                if (this.ownerRoom.allTears[t] === this)
+                    this.ownerRoom.allTears.slice(t, 1);
             }
         }
     }
     update() {
         //if(this.collidingEntities.length > 0)
         if (this.shooter instanceof Player) {
-            this.colliders = this.originalColliders.concat(this.owner.allEnemies, this.owner.allObstacles);
+            this.colliders = this.originalColliders.concat(this.ownerRoom.allEnemies, this.ownerRoom.allObstacles);
         }
         else if (this.shooter instanceof Enemy || this.shooter instanceof ShootingTurret) {
-            this.colliders = this.originalColliders.concat(this.owner.allPlayers, this.owner.allObstacles);
+            this.colliders = this.originalColliders.concat(this.ownerRoom.allPlayers, this.ownerRoom.allObstacles);
         }
 
         this.lifeTime = millis() - this.birthTime;

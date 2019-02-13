@@ -5,7 +5,7 @@ class Enemy extends Entity {
         super(c, r, hitBoxRadiusCB, health);
         this.hurtPlayer = true;//default
         this.damage = 1;
-        this.owner.allEnemies.push(this);
+        this.ownerRoom.allEnemies.push(this);
     }
     /*
     hitBoxUpdate()
@@ -22,15 +22,15 @@ class Enemy extends Entity {
     }*/
     selfDestruct()//BROKEN
     {
-        for (let e in this.owner.allEnemies) {
-            if (this.owner.allEnemies[e] === this)
-                this.owner.allEnemies.splice(e, 1);
+        for (let e in this.ownerRoom.allEnemies) {
+            if (this.ownerRoom.allEnemies[e] === this)
+                this.ownerRoom.allEnemies.splice(e, 1);
         }
 
     }
     baseUpdate() {
         super.baseUpdate();
-        this.colliders = this.originalColliders.concat(this.owner.allPlayers);
+        this.colliders = this.originalColliders.concat(this.ownerRoom.allPlayers);
         //if(this.selfDestruct)
         //    this.selfDestruct()
     }
@@ -41,7 +41,7 @@ class MovingEnemy extends Enemy {
     super(c, r, hitBoxRadiusCB, health);
     this.hurtPlayer = true;
     this.damage = 1;
-    this.owner.allEnemies.push(this);
+    this.ownerRoom.allEnemies.push(this);
   }
 
   /** TODO:
@@ -97,8 +97,8 @@ class Turret extends Enemy {
         super(c, r, hitBoxRadiusCB, Infinity);
         this.health = Infinity;
         this.colliders = [];
-        this.colliders = this.owner.allPlayers.slice();
-        for (let b of this.owner.allObstacles) {
+        this.colliders = this.ownerRoom.allPlayers.slice();
+        for (let b of this.ownerRoom.allObstacles) {
             if (b.type === blockType.wall)
                 this.colliders.push(b)
         }
@@ -113,13 +113,13 @@ class Turret extends Enemy {
             this.yFacing = -1;
         else
             this.yFacing = 1;
-        this.owner.enemiesNotPartOfCap++;
+        this.ownerRoom.enemiesNotPartOfCap++;
     }
     baseUpdate() {
         super.baseUpdate();
-        if (this.owner.cleared) {
+        if (this.ownerRoom.cleared) {
             this.selfDestruct = true;
-            this.owner.enemiesNotPartOfCap--;
+            this.ownerRoom.enemiesNotPartOfCap--;
         }
     }
     update() {
@@ -165,19 +165,19 @@ class ShootingTurret extends Entity {
         this.tearModes = [
             tearMode.Single_Shot
         ];
-        this.owner.allObstacles.push(this);
+        this.ownerRoom.allObstacles.push(this);
         this.invincible = true;
         this.activated = true;
-        //this.owner.allObstacles.push(this);
+        //this.ownerRoom.allObstacles.push(this);
     }
     baseUpdate() {
         super.baseUpdate();
-        this.colliders = this.originalColliders.concat(this.owner.allPlayers);
+        this.colliders = this.originalColliders.concat(this.ownerRoom.allPlayers);
         if (this.selfDestruct)
             this.selfDestruct()
     }
     shooting() {
-        if (this.owner.cleared)
+        if (this.ownerRoom.cleared)
             this.activated = false;
         if (!this.activated)
             return
@@ -302,24 +302,24 @@ class Button extends Entity {
         this.isMovable = false;
         this.triggered = false;
         this.playerCanPassThrough = true;
-        this.owner.enemiesNotPartOfCap--;
-        this.owner.allObstacles.unshift(this);
+        this.ownerRoom.enemiesNotPartOfCap--;
+        this.ownerRoom.allObstacles.unshift(this);
         this.ignoring = true;
     }
     update() {
-        this.colliders = this.originalColliders.concat(this.owner.allPlayers);
+        this.colliders = this.originalColliders.concat(this.ownerRoom.allPlayers);
         super.baseUpdate();
         if (this.collidingEntities.length === 0) {
             this.ignoring = false;
         }
         if (this.collidingEntities.length > 0 && !this.ignoring) {
             if (!this.triggered && !this.forRoomRestart)
-                this.owner.enemiesNotPartOfCap++;
+                this.ownerRoom.enemiesNotPartOfCap++;
 
             this.triggered = true;
         }
         if (!this.triggered) {
-            this.owner.cleared = false;
+            this.ownerRoom.cleared = false;
             fill(200, 0, 0);
         }
         else {
@@ -334,14 +334,14 @@ class Button extends Entity {
 class RoomResetButton extends Button {
     constructor(c, r) {
         super(c, r);
-        this.owner.enemiesNotPartOfCap++;// for undoing what the base button does
+        this.ownerRoom.enemiesNotPartOfCap++;// for undoing what the base button does
     }
     update() {
-        this.colliders = this.owner.allPlayers.slice();//only players can trigger this
+        this.colliders = this.ownerRoom.allPlayers.slice();//only players can trigger this
         super.baseUpdate();
         if (this.triggered) {
             console.log("triggered boi")
-            this.owner.resetRoom = true;
+            this.ownerRoom.resetRoom = true;
         }
         if (this.collidingEntities.length > 0) {
             this.triggered = true;
