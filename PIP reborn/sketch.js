@@ -37,7 +37,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     recalibrate();
     //makeBlocks();
-    new Floor();
+    new Game();
     setupRan = true;
 }
 

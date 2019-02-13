@@ -1,7 +1,9 @@
 let allFloors = [];
 let currentFloor;
 class Floor {
-    constructor() {
+    constructor(ownerGame) {
+      this.ownerGame = ownerGame;
+      this.ownerGame.floors.push(this);
         this.roomGrid = [[]];// x then y, roomGrid is an array column arrays
         this.roomGridSmallestX = 0;
         this.roomGridBiggestX = 0;

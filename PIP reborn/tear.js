@@ -29,7 +29,7 @@ class Tear extends Entity {
       if(shooter === null || shooter === undefined) {
         throw new Error("shooter is undefined for tear in creation");
       }
-        super(null, null, size, health, shooter.owner);
+        super(null, null, size, health, shooter.ownerRoom);
 
       if(xCB === null || xCB === undefined) {
         throw new Error("x value is undefined for tear in creation");
@@ -66,7 +66,7 @@ class Tear extends Entity {
       if(!(shooter instanceof Object)) {
         throw new Error("shooter for tear is not an object in creation");
       }
-      this.ownerRoom = this.shooter.owner;
+      this.ownerRoom = this.shooter.ownerRoom;
       this.ownerRoom.allTears.push(this);
       this.collidingEntities = [];
 
@@ -92,18 +92,6 @@ class Tear extends Entity {
           this.xSpeedCB = this.speed * Math.cos(this.facingMovement);
           this.ySpeedCB = this.speed * Math.sin(this.facingMovement);
       }
-=======
-        this.facingMovement = Math.atan2(this.ySpeedCB, this.ySpeedCB);// in radians
-        this.speed = Math.sqrt(Math.pow(this.xSpeedCB, 2) + Math.pow(this.ySpeedCB, 2));
-        if (this.speed < this.shotspeed) {
-            this.speed = this.shotSpeed;
-            this.xSpeedCB = this.speed * Math.cos(this.facingMovement);
-            this.ySpeedCB = this.speed * Math.sin(this.facingMovement);
-        }
-        if (this.shooter instanceof Enemy) {
-            this.damage = 1;
-        }
->>>>>>> 940e3fb44f57bdc24b58fb16944ea6a5fc78273c
     }
     selfDestructDetection() {
         for (let c of this.collidingEntities) {

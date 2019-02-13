@@ -186,7 +186,7 @@ class Room {
         this.ownerFloor.currentRoom.isCurrentRoom();
         this.ownerFloor.currentRoom.allPlayers = this.allPlayers.slice();
         for (let player of this.ownerFloor.currentRoom.allPlayers) {
-            player.ownerRoom = this.ownerRoom.currentRoom;
+            player.ownerRoom = this.ownerFloor.currentRoom;
             player.originalColliders = [];
             player.colliders = [];
             for (let i of player.ownerRoom.allObstacles) {
